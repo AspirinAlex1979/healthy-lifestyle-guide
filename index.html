@@ -3,47 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Регенерація | Персональний План</title>
+    <title>Smart Регенерація | Гірський Посібник</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         body {
-            /* НОВИЙ ФОН: Безмежні простори гір */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), 
-                              url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2560');
+            /* Безмежні гори */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), 
+                              url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
         .glass-card { 
-            background: rgba(255, 255, 255, 0.92); 
-            backdrop-filter: blur(15px); 
+            background: rgba(255, 255, 255, 0.93); 
+            backdrop-filter: blur(12px); 
             border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
-        .hidden { display: none !important; }
         .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #4f46e5;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4f46e5;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 font-sans hover:cursor-default">
+<body class="min-h-screen flex items-center justify-center p-4">
 
     <div id="screen-welcome" class="glass-card p-10 max-w-lg w-full text-center animate__animated animate__fadeIn">
         <h1 class="text-4xl font-bold text-gray-800 mb-4">Smart Регенерація 🏔️</h1>
-        <p class="text-lg text-gray-600 mb-8">Аналіз стану твого організму серед гірського спокою. Створимо твій план за 1 хвилину.</p>
-        <button onclick="navigate('welcome', 'q1')" class="bg-indigo-600 text-white px-10 py-4 rounded-full font-bold text-xl hover:scale-105 transition-all shadow-lg">Почати аналіз</button>
+        <p class="text-lg text-gray-600 mb-8">Персональний алгоритм відновлення у гірському спокої.</p>
+        <button onclick="showNext('welcome', 'q1')" class="bg-indigo-600 text-white px-10 py-4 rounded-full font-bold text-xl hover:bg-indigo-700 transition-all shadow-lg active:scale-95">Почати аналіз</button>
     </div>
 
     <div id="screen-q1" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
-        <span class="text-indigo-600 font-bold">Крок 1/7</span>
-        <h2 class="text-2xl font-bold mb-6">☕ Твій типовий раціон?</h2>
+        <p class="text-indigo-600 font-bold mb-2">1 з 7</p>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">☕ Як ти харчуєшся?</h2>
         <div class="space-y-3">
-            <button onclick="saveAndNavigate('diet', 'bad', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато кави, перекуси на ходу, фастфуд</button>
-            <button onclick="saveAndNavigate('diet', 'ok', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left
+            <button onclick="record('diet', 'bad', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато кави, перекуси, фастфуд</button>
+            <button onclick="record('diet', 'ok', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Домашня їжа, стараюсь стежити</button>
+        </div>
+    </div>
+
+    <div id="screen-q2" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
+        <p class="text-indigo-600 font-bold mb-2">2 з 7</p>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🏃 Скільки руху за день?</h2>
+        <div class="space-y-3">
+            <button onclick="record('sport', 'low', 'q2', 'q3')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Мало (сидяча робота)</button>
+            <button onclick="record('sport', 'mid', 'q2', 'q3')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато ходжу, легка активність</button>
+        </div>
+    </div>
+
+    <div id="screen-q3" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
+        <p class="text-indigo-600 font-bold mb-2">3 з 7</p>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🌙 Якість твого сну?</h2>
+        <div class="space-y-3">
+            <button onclick="record('sleep', 'bad', 'q3', 'q4')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Сплю мало (менше 6 год)</button>
+            <button onclick="record('sleep', 'good', 'q3', 'q4')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Сплю добре (7-8 год)</button>
+        </div>
+    </div>
+
+    <div id="screen-q4" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
+        <p class="text-indigo-600 font-bold mb-2">4 з 7</p>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">💧 Питний режим?</h2>
+        <div class="space-y-3">
+            <button onclick="record('water', 'low', 'q4', 'q5')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">П'ю мало води</button>
+            <button onclick="record('water', 'good', 'q4', 'q5')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">П'ю достатньо (1.5л+)</button>
+        </div>
+    </div>
+
+    <div id="screen-q5" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
+        <p class="text-indigo-600 font-bold mb-2">5 з 7</p>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🤯 Рівень стресу?</h2>
+        <div class="space-y-3">
+            <button onclick="record('stress', 'high', 'q5', 'q6')" class="w-full p-4 border-2 rounded-xl hover:border-red-500 hover:bg-red-50 text-left transition-all">Високий, постійна напруга</button>
+            <button onclick="record('stress', 'low', 'q5', 'q6')" class="w-full p-4 border-2 rounded-xl hover:border-green-500 hover:bg-green-50 text-left transition-all">Помірний, спокійний</button>
+        </div>
+    </div>
+
+    <div id="screen-q6" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
+        <p class="text-indigo-600 font-bold mb-2">6 з 7</p>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🏠 Локація для спорту?</h2>
+        <div class="space-y-3">
+            <button onclick="record('loc', 'home', 'q6', 'q7')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Тільки вдома</button>
+            <button onclick="record('loc', 'street', 'q6', 'q7')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Вулиця / Турніки</button>
+        </div>
+    </div>
+
+    <div id="screen-q7" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
+        <p class="text-indigo-600 font-bold mb-2">7 з 7</p>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🎯 Твоя ціль?</h2>
+        <div class="space-y-3">
+            <button onclick="finish('weight', 'q7')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Схуднути та підтягнутись</button>
+            <button onclick="finish('health', 'q7')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Зняти стрес та додати сил</button>
+        </div>
+    </div>
+
+    <div id="screen-loading" class="glass-card p-12 max-w-md w-full hidden text-center animate__animated animate__fadeIn">
+        <div class="loader mx-auto mb-6"></div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Гірське міркування...</h2>
+        <p class="text-gray-500 italic">Штучний інтелект підбирає персональні відео-курси та раціон на основі твоїх метаданих.</p>
+    </div>
+
+    <div id="screen-result" class="glass-card p-10 max-w-3xl w-full hidden animate__animated animate__zoomIn overflow-y-auto max-h-[90vh]">
+        <h2 class="text-3xl font-bold text-indigo-700 mb-6">Твій План Перезавантаження 🏆</h2>
+        <div id="result-content" class="space-y-6 text-gray-700 leading-relaxed">
+            </div>
+        
+        <div class="mt-8 pt-6 border-t space-y-4">
+            <h3 class="font-bold text-xl">🔗 Твій персональний набір посилань:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <a href="http://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="block p-4 bg-red-50 rounded-xl text-red-700 font-bold hover:bg-red-100 shadow-sm transition-all">📹 Тренування для схуднення</a>
+                <a href="http://www.youtube.com/watch?v=pyEzsYWxmPw" target="_blank" class="block p-4 bg-indigo-50 rounded-xl text-indigo-700 font-bold hover:bg-indigo-100 shadow-sm transition-all">📹 Техніка правильної планки</a>
+                <a href="https://maminaferma.com.ua/wp-content/uploads/2021/11/zdorova-tarilka-ukr.jpg" target="_blank" class="block p-4 bg-green-50 rounded-xl text-green-700 font-bold hover:bg-green-100 shadow-sm transition-all">📸 Фото "Здорової тарілки"</a>
+                <a href="http://www.youtube.com/watch?v=ItNWf1FDow0" target="_blank" class="block p-4 bg-yellow-50 rounded-xl text-yellow-800 font-bold hover:bg-yellow-100 shadow-sm transition-all">🎵 Музика гір для спокою</a>
+            </div>
+        </div>
+        <button onclick="location.reload()" class="mt-8 w-full bg-gray-800 text-white py-4 rounded-2xl font-bold hover:bg-black transition-all">Пройти аналіз ще раз</button>
+    </div>
+
+    <script>
+        let userData = {};
+
+        function showNext(current, next) {
+            document.getElementById('screen-' + current).style.display = 'none';
+            document.getElementById('screen-' + next).style.display = 'block';
+        }
+
+        function record(key, val, current, next) {
+            userData[key] = val;
+            showNext(current, next);
+        }
+
+        function finish(goal, current) {
+            userData['goal'] = goal;
+            showNext(current, 'loading');
+
+            setTimeout(() => {
+                showResult();
+            }, 3000); // 3 секунди очікування
+        }
+
+        function showResult() {
+            document.getElementById('screen-loading').style.display = 'none';
+            document.getElementById('screen-result').style.display = 'block';
+            
+            const content = document.getElementById('result-content');
+            let plan = "";
+
+            if (userData.stress === 'high' || userData.sleep === 'bad') {
+                plan = `
+                    <div class="bg-yellow-100 p-5 rounded-2xl border-l-8 border-yellow-400">
+                        <h4 class="font-bold text-yellow-800 text-xl">⚠️ Пріоритет: Зниження кортизолу</h4>
+                        <p>Організм працює на межі. Тобі протипоказані важкі виснажливі тренування. Почни з відновлення сну та магнієвої дієти.</p>
+                    </div>
+                    <div class="p-2">
+                        <h4 class="font-bold text-indigo-800 mb-2">🏔️ Рекомендація по спорту:</h4>
+                        <p>Ранкова розминка 15 хв. Планка 2-3 підходи по 30-40 сек. Повільні прогулянки. Головне - дихання.</p>
+                    </div>
+                `;
+            } else {
+                plan = `
+                    <div class="bg-green-100 p-5 rounded-2xl border-l-8 border-green-400">
+                        <h4 class="font-bold text-green-800 text-xl">🚀 Пріоритет: Жироспалювання та Рельєф</h4>
+                        <p>Твої показники дозволяють працювати інтенсивно. Час розігнати метаболізм та зміцнити м'язовий корсет.</p>
+                    </div>
+                    <div class="p-2">
+                        <h4 class="font-bold text-indigo-800 mb-2">🏔️ Рекомендація по спорту:</h4>
+                        <p>Комплекс: 20 присідань, 15 віджимань, 1 хв планки, 10 випадів на ногу. 4 повних кола. Відпочинок між колами - 1 хвилина.</p>
+                    </div>
+                `;
+            }
+
+            plan += `
+                <div class="p-2">
+                    <h4 class="font-bold text-indigo-800 mb-2">🥗 Порада по харчуванню:</h4>
+                    <p>З твоїм питним режимом (${userData.water === 'low' ? 'треба пити більше' : 'все добре'}), важливо тримати баланс солі. Використовуй "Правило тарілки" (див. посилання нижче).</p>
+                </div>
+            `;
+
+            content.innerHTML = plan;
+        }
+    </script>
+
+</body>
+</html>
