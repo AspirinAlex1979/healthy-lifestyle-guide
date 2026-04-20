@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         body {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                              url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=2560');
+            /* НОВИЙ ФОН: Безмежні простори гір */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), 
+                              url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2560');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -20,7 +21,7 @@
             border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #4f46e5;
@@ -32,35 +33,17 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 font-sans">
+<body class="min-h-screen flex items-center justify-center p-4 font-sans hover:cursor-default">
 
     <div id="screen-welcome" class="glass-card p-10 max-w-lg w-full text-center animate__animated animate__fadeIn">
-        <h1 class="text-4xl font-bold text-gray-800 mb-4">Smart Регенерація 🌿</h1>
-        <p class="text-lg text-gray-600 mb-8">Аналіз стану твого організму та створення персональної стратегії відновлення.</p>
-        <button onclick="nextScreen('welcome', 'q1')" class="bg-indigo-600 text-white px-10 py-4 rounded-full font-bold text-xl hover:scale-105 transition-all shadow-lg">Почати аналіз</button>
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Smart Регенерація 🏔️</h1>
+        <p class="text-lg text-gray-600 mb-8">Аналіз стану твого організму серед гірського спокою. Створимо твій план за 1 хвилину.</p>
+        <button onclick="navigate('welcome', 'q1')" class="bg-indigo-600 text-white px-10 py-4 rounded-full font-bold text-xl hover:scale-105 transition-all shadow-lg">Почати аналіз</button>
     </div>
 
     <div id="screen-q1" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
         <span class="text-indigo-600 font-bold">Крок 1/7</span>
         <h2 class="text-2xl font-bold mb-6">☕ Твій типовий раціон?</h2>
         <div class="space-y-3">
-            <button onclick="save('diet', 'bad', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато кави, перекуси на ходу</button>
-            <button onclick="save('diet', 'ok', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Домашня їжа, але нерегулярно</button>
-        </div>
-    </div>
-
-    <div id="screen-q2" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
-        <span class="text-indigo-600 font-bold">Крок 2/7</span>
-        <h2 class="text-2xl font-bold mb-6">🏃 Рівень руху за день?</h2>
-        <div class="space-y-3">
-            <button onclick="save('sport', 'low', 'q2', 'q3')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Мало (сидяча робота)</button>
-            <button onclick="save('sport', 'mid', 'q2', 'q3')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато ходжу або тренуюсь</button>
-        </div>
-    </div>
-
-    <div id="screen-q3" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
-        <span class="text-indigo-600 font-bold">Крок 3/7</span>
-        <h2 class="text-2xl font-bold mb-6">🌙 Як ти спиш?</h2>
-        <div class="space-y-3">
-            <button onclick="save('sleep', 'bad', 'q3', 'q4')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Менше 6 годин, переривчастий</button>
-            <button onclick="save('sleep', 'good', 'q3', 'q4')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-5
+            <button onclick="saveAndNavigate('diet', 'bad', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато кави, перекуси на ходу, фастфуд</button>
+            <button onclick="saveAndNavigate('diet', 'ok', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left
