@@ -3,112 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Перезавантаження</title>
+    <title>Smart Регенерація | Персональний План</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; }
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                              url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=2560');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.92); 
+            backdrop-filter: blur(15px); 
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
         .hidden { display: none; }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="gradient-bg min-h-screen flex items-center justify-center p-4 font-sans">
+<body class="min-h-screen flex items-center justify-center p-4 font-sans">
 
-    <div id="screen-welcome" class="glass-card p-8 max-w-md w-full text-center animate__animated animate__fadeIn">
-        <h1 class="text-3xl font-bold text-gray-800 mb-4">Привіт! 👋</h1>
-        <p class="text-gray-600 mb-6">Давай створимо твій персональний план відновлення за 1 хвилину.</p>
-        <button onclick="nextScreen('welcome', 'q1')" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform">Почати тест</button>
+    <div id="screen-welcome" class="glass-card p-10 max-w-lg w-full text-center animate__animated animate__fadeIn">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Smart Регенерація 🌿</h1>
+        <p class="text-lg text-gray-600 mb-8">Аналіз стану твого організму та створення персональної стратегії відновлення.</p>
+        <button onclick="nextScreen('welcome', 'q1')" class="bg-indigo-600 text-white px-10 py-4 rounded-full font-bold text-xl hover:scale-105 transition-all shadow-lg">Почати аналіз</button>
     </div>
 
     <div id="screen-q1" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
-        <h2 class="text-2xl font-bold mb-4">🥪 Твоє харчування сьогодні?</h2>
+        <span class="text-indigo-600 font-bold">Крок 1/7</span>
+        <h2 class="text-2xl font-bold mb-6">☕ Твій типовий раціон?</h2>
         <div class="space-y-3">
-            <button onclick="saveAnswer('diet', 'bad', 'q1', 'q2')" class="w-full p-4 border rounded-xl hover:bg-indigo-50 text-left">Фастфуд, багато кави, перекуси</button>
-            <button onclick="saveAnswer('diet', 'ok', 'q1', 'q2')" class="w-full p-4 border rounded-xl hover:bg-indigo-50 text-left">50/50, намагаюсь їсти домашнє</button>
-            <button onclick="saveAnswer('diet', 'good', 'q1', 'q2')" class="w-full p-4 border rounded-xl hover:bg-indigo-50 text-left">Раціон збалансований</button>
+            <button onclick="save('diet', 'bad', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато кави, перекуси на ходу</button>
+            <button onclick="save('diet', 'ok', 'q1', 'q2')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Домашня їжа, але нерегулярно</button>
         </div>
     </div>
 
     <div id="screen-q2" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
-        <h2 class="text-2xl font-bold mb-4">🏃 Як часто рухаєшся?</h2>
+        <span class="text-indigo-600 font-bold">Крок 2/7</span>
+        <h2 class="text-2xl font-bold mb-6">🏃 Рівень руху за день?</h2>
         <div class="space-y-3">
-            <button onclick="saveAnswer('sport', 'low', 'q2', 'q3')" class="w-full p-4 border rounded-xl hover:bg-indigo-50 text-left">Сидяча робота, руху мало</button>
-            <button onclick="saveAnswer('sport', 'mid', 'q2', 'q3')" class="w-full p-4 border rounded-xl hover:bg-indigo-50 text-left">Багато ходжу, легкі навантаження</button>
-            <button onclick="saveAnswer('sport', 'high', 'q2', 'q3')" class="w-full p-4 border rounded-xl hover:bg-indigo-50 text-left">Регулярний спорт / Важка праця</button>
+            <button onclick="save('sport', 'low', 'q2', 'q3')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Мало (сидяча робота)</button>
+            <button onclick="save('sport', 'mid', 'q2', 'q3')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Багато ходжу або тренуюсь</button>
         </div>
     </div>
 
     <div id="screen-q3" class="glass-card p-8 max-w-md w-full hidden animate__animated animate__fadeInRight">
-        <h2 class="text-2xl font-bold mb-4">🤯 Рівень стресу?</h2>
+        <span class="text-indigo-600 font-bold">Крок 3/7</span>
+        <h2 class="text-2xl font-bold mb-6">🌙 Як ти спиш?</h2>
         <div class="space-y-3">
-            <button onclick="generateResult('high')" class="w-full p-4 border rounded-xl hover:bg-red-50 text-left">Високий (недосип, напруга)</button>
-            <button onclick="generateResult('low')" class="w-full p-4 border rounded-xl hover:bg-green-50 text-left">Помірний (все під контролем)</button>
-        </div>
-    </div>
-
-    <div id="screen-result" class="glass-card p-8 max-w-2xl w-full hidden animate__animated animate__zoomIn">
-        <h2 class="text-3xl font-bold text-indigo-700 mb-2">Твій персональний план 🎯</h2>
-        <div id="result-text" class="prose text-gray-700 mt-4 space-y-4">
-            </div>
-        <button onclick="location.reload()" class="mt-8 text-indigo-600 font-semibold underline">Пройти ще раз</button>
-    </div>
-
-    <script>
-        let answers = {};
-
-        function nextScreen(current, next) {
-            document.getElementById('screen-' + current).classList.add('hidden');
-            document.getElementById('screen-' + next).classList.remove('hidden');
-        }
-
-        function saveAnswer(key, value, current, next) {
-            answers[key] = value;
-            nextScreen(current, next);
-        }
-
-        function generateResult(stressLevel) {
-            answers['stress'] = stressLevel;
-            document.getElementById('screen-q3').classList.add('hidden');
-            const resScreen = document.getElementById('screen-result');
-            const resText = document.getElementById('result-text');
-            resScreen.classList.remove('hidden');
-
-            let plan = "";
-
-            if (answers.stress === 'high') {
-                plan = `
-                    <h3 class="text-xl font-bold">План: "М'яке відновлення" 🧘‍♂️</h3>
-                    <p>Твій організм зараз в режимі виживання. Ніяких важких гирь!</p>
-                    <ul>
-                        <li><strong>Харчування:</strong> Додай магній (горіхи, насіння) та виключи цукор, він посилює тривогу.</li>
-                        <li><strong>Тренування:</strong> Тільки легка розтяжка та ходьба. 15 хв зранку.</li>
-                        <li><strong>Порада:</strong> Режим сну понад усе. Лягай до 23:00.</li>
-                    </ul>
-                `;
-            } else if (answers.diet === 'bad' || answers.sport === 'low') {
-                plan = `
-                    <h3 class="text-xl font-bold">План: "Активне схуднення" 🔥</h3>
-                    <p>Час розігнати метаболізм!</p>
-                    <ul>
-                        <li><strong>Харчування:</strong> "Правило тарілки": 50% овочів у кожному прийомі їжі.</li>
-                        <li><strong>Тренування:</strong> 3 рази на тиждень (присідання, віджимання, планка).</li>
-                        <li><strong>Ціль:</strong> 10 000 кроків щодня без виключень.</li>
-                    </ul>
-                `;
-            } else {
-                plan = `
-                    <h3 class="text-xl font-bold">План: "Прогрес та сила" 💪</h3>
-                    <p>Ти в гарній формі, давай її покращимо.</p>
-                    <ul>
-                        <li><strong>Харчування:</strong> Збільш кількість білка (2г на кг ваги).</li>
-                        <li><strong>Тренування:</strong> Додай інтенсивності. 4-5 кіл вправ.</li>
-                        <li><strong>Активність:</strong> Велосипед або біг у вихідні.</li>
-                    </ul>
-                `;
-            }
-
-            resText.innerHTML = plan;
-        }
-    </script>
-</body>
-</html>
+            <button onclick="save('sleep', 'bad', 'q3', 'q4')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 text-left transition-all">Менше 6 годин, переривчастий</button>
+            <button onclick="save('sleep', 'good', 'q3', 'q4')" class="w-full p-4 border-2 rounded-xl hover:border-indigo-5
