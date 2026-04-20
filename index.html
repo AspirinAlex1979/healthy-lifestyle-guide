@@ -3,216 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Регенерація | Premium Experience</title>
+    <title>Smart Регенерація | Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
         body {
+            font-family: 'Inter', sans-serif;
             background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), 
                               url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #fff;
+            overflow-x: hidden;
         }
+
         .glass-card { 
             background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(15px); 
+            backdrop-filter: blur(20px); 
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
-        /* СУЧАСНА КНОПКА */
-        .btn-premium {
-            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
-            border: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(5px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .btn-premium:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border-color: rgba(255,255,255,0.5);
-        }
-        .btn-premium:active { transform: scale(0.95); }
 
-        .btn-main {
-            background: #fff;
-            color: #1e1e1e;
-            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        /* PREMIUM BUTTONS */
+        .btn-modern {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-main:hover {
-            background: #f3f3f3;
-            box-shadow: 0 0 30px rgba(255,255,255,0.5);
+
+        .btn-modern:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-start {
+            background: #ffffff;
+            color: #1a1a1a;
+            font-weight: 700;
+            padding: 20px 60px;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.5);
+            background: #f8f8f8;
         }
 
         .loader {
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top: 3px solid #fff;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #ffffff;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
         }
+
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .hidden { display: none !important; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-6">
 
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="screen-welcome" class="glass-card p-12 max-w-xl w-full text-center animate__animated animate__zoomIn">
-        <h1 class="text-5xl font-bold mb-6 tracking-tight">Smart Регенерація</h1>
-        <p class="text-xl opacity-90 mb-10 leading-relaxed font-light">Твій шлях до відновлення серед гірських вершин. Почни трансформацію прямо зараз.</p>
-        <button onclick="startExperience()" class="btn-main px-12 py-5 rounded-full font-bold text-xl transition-all active:scale-95 shadow-2xl">Почати аналіз</button>
+    <div id="screen-welcome" class="glass-card p-12 max-w-2xl w-full text-center animate__animated animate__zoomIn">
+        <h1 class="text-6xl font-bold mb-8 tracking-tighter">Smart Регенерація</h1>
+        <p class="text-xl opacity-80 mb-12 font-light leading-relaxed">
+            Персоналізована стратегія відновлення духу та тіла. <br>Відчуй спокій гір у кожному кроці.
+        </p>
+        <button onclick="startApp()" class="btn-start animate__animated animate__pulse animate__infinite">Почати аналіз</button>
     </div>
 
     <div id="screen-q1" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Питання 1 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Який твій типовий раціон?</h2>
+        <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">Етап 1 / 7</p>
+        <h2 class="text-3xl font-semibold mb-8 text-white/90">Який твій раціон зараз?</h2>
         <div class="grid gap-4">
-            <button onclick="record('diet', 'bad', 'q1', 'q2')" class="btn-premium p-5 rounded-2xl text-left">Швидкі перекуси, фастфуд, багато кави</button>
-            <button onclick="record('diet', 'ok', 'q1', 'q2')" class="btn-premium p-5 rounded-2xl text-left">Домашня їжа, стараюсь балансувати</button>
+            <button onclick="record('diet', 'bad', 'q1', 'q2')" class="btn-modern">⚠️ Багато кави, перекуси, фастфуд</button>
+            <button onclick="record('diet', 'ok', 'q1', 'q2')" class="btn-modern">🥗 Домашня їжа, стараюсь балансувати</button>
         </div>
     </div>
 
     <div id="screen-q2" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Питання 2 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Скільки ти рухаєшся за день?</h2>
+        <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">Етап 2 / 7</p>
+        <h2 class="text-3xl font-semibold mb-8 text-white/90">Рівень руху за день?</h2>
         <div class="grid gap-4">
-            <button onclick="record('sport', 'low', 'q2', 'q3')" class="btn-premium p-5 rounded-2xl text-left">Мало (переважно сидяча робота)</button>
-            <button onclick="record('sport', 'mid', 'q2', 'q3')" class="btn-premium p-5 rounded-2xl text-left">Активно ходжу, легкі тренування</button>
+            <button onclick="record('sport', 'low', 'q2', 'q3')" class="btn-modern">📍 Переважно сидяча робота</button>
+            <button onclick="record('sport', 'mid', 'q2', 'q3')" class="btn-modern">🏃 Багато ходжу, легка активність</button>
         </div>
     </div>
 
     <div id="screen-q3" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Питання 3 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Як ти оцінюєш свій сон?</h2>
+        <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">Етап 3 / 7</p>
+        <h2 class="text-3xl font-semibold mb-8 text-white/90">Якість твого сну?</h2>
         <div class="grid gap-4">
-            <button onclick="record('sleep', 'bad', 'q3', 'q4')" class="btn-premium p-5 rounded-2xl text-left">Сплю менше 6 годин, важко засинаю</button>
-            <button onclick="record('sleep', 'good', 'q3', 'q4')" class="btn-premium p-5 rounded-2xl text-left">Сплю стабільно 7-8 годин</button>
+            <button onclick="record('sleep', 'bad', 'q3', 'q4')" class="btn-modern">☁️ Менше 6 год, важко заснути</button>
+            <button onclick="record('sleep', 'good', 'q3', 'q4')" class="btn-modern">💤 Глибокий сон 7-8 год</button>
         </div>
     </div>
 
     <div id="screen-q4" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Питання 4 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Чи п'єш ти достатньо води?</h2>
+        <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">Етап 4 / 7</p>
+        <h2 class="text-3xl font-semibold mb-8 text-white/90">Чи п'єш достатньо води?</h2>
         <div class="grid gap-4">
-            <button onclick="record('water', 'low', 'q4', 'q5')" class="btn-premium p-5 rounded-2xl text-left">Мало, частіше чай або каву</button>
-            <button onclick="record('water', 'good', 'q4', 'q5')" class="btn-premium p-5 rounded-2xl text-left">Так, близько 1.5-2 літрів на день</button>
+            <button onclick="record('water', 'low', 'q4', 'q5')" class="btn-modern">💧 П'ю замало (тільки кава/чай)</button>
+            <button onclick="record('water', 'good', 'q4', 'q5')" class="btn-modern">🌊 П'ю 1.5-2 літри чистої води</button>
         </div>
     </div>
 
     <div id="screen-q5" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Питання 5 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Твій рівень стресу зараз?</h2>
+        <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">Етап 5 / 7</p>
+        <h2 class="text-3xl font-semibold mb-8 text-white/90">Твій рівень стресу?</h2>
         <div class="grid gap-4">
-            <button onclick="record('stress', 'high', 'q5', 'q6')" class="btn-premium p-5 rounded-2xl text-left border-red-400/30">Високий (постійна напруга)</button>
-            <button onclick="record('stress', 'low', 'q5', 'q6')" class="btn-premium p-5 rounded-2xl text-left border-green-400/30">Помірний (все під контролем)</button>
+            <button onclick="record('stress', 'high', 'q5', 'q6')" class="btn-modern border-red-500/20">🔥 Високий (постійна напруга)</button>
+            <button onclick="record('stress', 'low', 'q5', 'q6')" class="btn-modern border-green-500/20">🍃 Помірний (спокійний)</button>
         </div>
     </div>
 
     <div id="screen-q6" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Питання 6 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Локація для активності?</h2>
+        <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">Етап 6 / 7</p>
+        <h2 class="text-3xl font-semibold mb-8 text-white/90">Локація для спорту?</h2>
         <div class="grid gap-4">
-            <button onclick="record('loc', 'home', 'q6', 'q7')" class="btn-premium p-5 rounded-2xl text-left">Вдома (обмежений простір)</button>
-            <button onclick="record('loc', 'street', 'q6', 'q7')" class="btn-premium p-5 rounded-2xl text-left">Вулиця / Парк / Турніки</button>
+            <button onclick="record('loc', 'home', 'q6', 'q7')" class="btn-modern">🏠 Вдома (закритий простір)</button>
+            <button onclick="record('loc', 'street', 'q6', 'q7')" class="btn-modern">⛰️ Вулиця / Турніки / Гори</button>
         </div>
     </div>
 
     <div id="screen-q7" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="text-sm uppercase tracking-widest opacity-60 mb-2">Питання 7 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Яка твоя головна ціль?</h2>
+        <p class="text-xs uppercase tracking-[0.3em] opacity-50 mb-4">Етап 7 / 7</p>
+        <h2 class="text-3xl font-semibold mb-8 text-white/90">Яка твоя мета?</h2>
         <div class="grid gap-4">
-            <button onclick="finish('weight', 'q7')" class="btn-premium p-5 rounded-2xl text-left">Схуднути та підтягнути тіло</button>
-            <button onclick="finish('health', 'q7')" class="btn-premium p-5 rounded-2xl text-left">Зняти напругу та додати енергії</button>
+            <button onclick="finish('weight', 'q7')" class="btn-modern">🎯 Схуднення та рельєф</button>
+            <button onclick="finish('health', 'q7')" class="btn-modern">🧘‍♂️ Енергія та антистрес</button>
         </div>
     </div>
 
     <div id="screen-loading" class="glass-card p-16 max-w-md w-full hidden text-center animate__animated animate__fadeIn">
         <div class="loader mx-auto mb-8"></div>
         <h2 class="text-2xl font-light mb-2">Гірське міркування...</h2>
-        <p class="opacity-50 italic text-sm">Аналізуємо твої біоритми</p>
+        <p class="opacity-40 italic text-sm">Синхронізація з твоїми показниками</p>
     </div>
 
-    <div id="screen-result" class="glass-card p-12 max-w-3xl w-full hidden animate__animated animate__zoomIn overflow-y-auto max-h-[90vh]">
-        <h2 class="text-4xl font-bold mb-8 text-white">Твій План Перезавантаження 🏔️</h2>
-        <div id="result-content" class="space-y-8 text-lg font-light leading-relaxed">
+    <div id="screen-result" class="glass-card p-12 max-w-3xl w-full hidden animate__animated animate__zoomIn overflow-y-auto max-h-[85vh]">
+        <h2 class="text-4xl font-bold mb-8">Твій План Перезавантаження 🏔️</h2>
+        <div id="result-content" class="space-y-8 text-lg font-light">
             </div>
         
-        <div class="mt-10 pt-8 border-t border-white/10 space-y-6">
-            <h3 class="text-2xl font-medium">Твій арсенал:</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="http://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="block p-5 btn-premium rounded-2xl font-bold text-center">📹 Курс: Схуднення вдома</a>
-                <a href="http://www.youtube.com/watch?v=pyEzsYWxmPw" target="_blank" class="block p-5 btn-premium rounded-2xl font-bold text-center">📹 Техніка Планки</a>
-                <a href="https://maminaferma.com.ua/wp-content/uploads/2021/11/zdorova-tarilka-ukr.jpg" target="_blank" class="block p-5 btn-premium rounded-2xl font-bold text-center">📸 Схема харчування</a>
-                <a href="http://www.youtube.com/watch?v=ItNWf1FDow0" target="_blank" class="block p-5 btn-premium rounded-2xl font-bold text-center text-yellow-300">🎵 Гірська медитація</a>
-            </div>
+        <div class="mt-12 pt-8 border-t border-white/10 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="http://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="btn-modern font-bold text-center border-indigo-500/30">📹 Відео-курс: Схуднення</a>
+            <a href="http://www.youtube.com/watch?v=pyEzsYWxmPw" target="_blank" class="btn-modern font-bold text-center border-indigo-500/30">📹 Техніка Планки</a>
+            <a href="https://maminaferma.com.ua/wp-content/uploads/2021/11/zdorova-tarilka-ukr.jpg" target="_blank" class="btn-modern font-bold text-center border-indigo-500/30">📸 План харчування</a>
+            <a href="http://www.youtube.com/watch?v=ItNWf1FDow0" target="_blank" class="btn-modern font-bold text-center border-yellow-500/30 text-yellow-200">🎵 Гірська медитація</a>
         </div>
-        <button onclick="location.reload()" class="mt-10 w-full btn-main py-5 rounded-2xl font-bold text-lg">Пройти знову</button>
+        <button onclick="location.reload()" class="mt-10 w-full btn-start py-5">Пройти знову</button>
     </div>
 
     <script>
         let userData = {};
+        let bgMusic = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3');
+        bgMusic.loop = true;
+        bgMusic.volume = 0.3;
 
-        function startExperience() {
-            // Вмикаємо музику при першій взаємодії
-            const music = document.getElementById('bgMusic');
-            music.volume = 0.4;
-            music.play().catch(e => console.log("Музика заблокована браузером до кліку"));
-            
+        function startApp() {
+            // Запускаємо музику з об'єкта, а не з тегу
+            bgMusic.play().catch(e => console.log("Музика потребує кліку"));
             showNext('welcome', 'q1');
         }
 
-        function showNext(current, next) {
-            document.getElementById('screen-' + current).style.display = 'none';
-            document.getElementById('screen-' + next).style.display = 'block';
+        function showNext(cur, nxt) {
+            document.getElementById('screen-' + cur).classList.add('hidden');
+            document.getElementById('screen-' + nxt).classList.remove('hidden');
         }
 
-        function record(key, val, current, next) {
+        function record(key, val, cur, nxt) {
             userData[key] = val;
-            showNext(current, next);
+            showNext(cur, nxt);
         }
 
-        function finish(goal, current) {
+        function finish(goal, cur) {
             userData['goal'] = goal;
-            showNext(current, 'loading');
-            setTimeout(() => showResult(), 3500);
+            showNext(cur, 'loading');
+            setTimeout(() => {
+                document.getElementById('screen-loading').classList.add('hidden');
+                document.getElementById('screen-result').classList.remove('hidden');
+                generateReport();
+            }, 3000);
         }
 
-        function showResult() {
-            document.getElementById('screen-loading').style.display = 'none';
-            document.getElementById('screen-result').style.display = 'block';
-            
+        function generateReport() {
             const content = document.getElementById('result-content');
-            let res = "";
+            let html = "";
 
             if (userData.stress === 'high' || userData.sleep === 'bad') {
-                res = `
-                    <div class="bg-white/10 p-6 rounded-2xl border-l-4 border-yellow-400">
-                        <h4 class="text-2xl font-bold text-yellow-300 mb-3">Відновлення — твій пріоритет</h4>
-                        <p>Твій організм сигналізує про втому. Почни з м'яких навантажень. Жодних виснажливих забігів, лише баланс і спокій.</p>
+                html = `
+                    <div class="bg-white/5 p-6 rounded-3xl border-l-4 border-yellow-400">
+                        <h4 class="text-2xl font-bold text-yellow-200 mb-2">Відновлення — ключ до результату</h4>
+                        <p>Наразі твій організм у стресі. Починаємо з м'яких технік. Ніякого фанатизму, тільки спокій та системність.</p>
                     </div>
-                    <p>🏃 **Тренування:** Планка 45 сек, легкі присідання (12 разів), розтяжка. 20 хв на день.</p>
+                    <p>🧘‍♂️ **Твій спорт:** Планка 30-45 сек, дихальні вправи та 10 000 кроків. Цього достатньо для старту.</p>
                 `;
             } else {
-                res = `
-                    <div class="bg-white/10 p-6 rounded-2xl border-l-4 border-green-400">
-                        <h4 class="text-2xl font-bold text-green-300 mb-3">Час для активного прогресу</h4>
-                        <p>Ти в гарному ресурсному стані. Давай додамо вогню! Метаболізм готовий до інтенсивної роботи.</p>
+                html = `
+                    <div class="bg-white/5 p-6 rounded-3xl border-l-4 border-green-400">
+                        <h4 class="text-2xl font-bold text-green-300 mb-2">Організм готовий до штурму!</h4>
+                        <p>Твої показники чудові. Час додати інтенсивності, щоб побачити справжній рельєф.</p>
                     </div>
-                    <p>🔥 **Тренування:** 4 кола по 20 присідань, 15 віджимань, 1 хв планки. Твоє тіло скаже "дякую".</p>
+                    <p>🔥 **Твій спорт:** 4 кола по 20 присідань, 15 віджимань та 1 хв планки. Тіло буде горіти!</p>
                 `;
             }
 
-            res += `<p>🥗 **Дієта:** Додай більше зелені. Пиття води (${userData.water === 'low' ? 'якої зараз мало' : 'якої достатньо'}) — це ключ до енергії.</p>`;
-            content.innerHTML = res;
+            html += `<p>🥗 **Порада:** Дотримуйся правила тарілки. Твоє споживання води (${userData.water === 'low' ? 'треба збільшити!' : 'на висоті'}) — основа метаболізму.</p>`;
+            content.innerHTML = html;
         }
     </script>
 </body>
