@@ -3,282 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Регенерація | Premium Edition</title>
+    <title>Smart Регенерація | Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        
         body {
-            font-family: 'Inter', sans-serif;
-            /* Фон з безмежними горами */
+            margin: 0; padding: 0; font-family: 'Inter', sans-serif;
             background: #000 url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
-            background-size: cover;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            margin: 0;
-            overflow: hidden;
+            background-size: cover; color: white; height: 100vh; display: flex; align-items: center; justify-content: center;
         }
-
-        /* Ефект матового скла для карток */
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 35px;
-            padding: 40px;
-            width: 90%;
-            max-width: 550px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            display: none; /* Всі екрани приховані за замовчуванням */
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 40px; padding: 40px;
+            width: 95%; max-width: 550px; text-align: center; display: none;
         }
-
-        /* Клас для відображення активного екрана */
         .active { display: block !important; }
-
-        /* Стиль преміальних кнопок */
         .btn-premium {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            padding: 18px 25px;
-            border-radius: 15px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-            text-align: left;
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white; padding: 18px; border-radius: 15px; width: 100%; margin-bottom: 12px; cursor: pointer; text-align: center;
         }
-
-        .btn-premium:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: white;
-            transform: translateY(-2px);
-        }
-
         .btn-main {
-            background: #ffffff;
-            color: #000000;
-            padding: 20px 50px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 20px;
-            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
+            background: #ffffff; color: #000; padding: 20px 50px; border-radius: 50px; font-weight: 800; cursor: pointer; border: none;
         }
-
-        .btn-main:hover { transform: scale(1.05); background: #f0f0f0; }
-
-        /* Кнопка музики */
-        .music-control {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            font-size: 22px;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Анімація завантаження */
-        .loader {
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top: 4px solid #fff;
-            border-radius: 50%;
-            width: 50px; height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .res-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 4px solid #fff;
-            padding: 15px;
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .link-card {
-            display: block;
-            background: white;
-            color: black;
-            padding: 15px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            margin-bottom: 10px;
-            transition: 0.3s;
-        }
-        .link-card:hover { transform: scale(1.02); background: #eee; }
+        .donate-box { background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.4); border-radius: 20px; padding: 20px; margin: 20px 0; }
+        .res-img { width: 100%; border-radius: 20px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="music-control" onclick="toggleMusic()" id="mTrigger">🔊</div>
-
-    <div id="welcome" class="glass-card active animate__animated animate__fadeIn">
-        <h1 class="text-4xl font-bold mb-4">Smart Регенерація</h1>
-        <p class="mb-8 opacity-80">Твій персональний алгоритм відновлення у гірському спокої. Аналіз займе 60 секунд.</p>
-        <button onclick="startApp()" class="btn-main">Почати аналіз</button>
+    <div id="welcome" class="glass-card active">
+        <h1 class="text-4xl font-bold mb-4">Smart Регенерація 🏔️</h1>
+        <p class="mb-8 opacity-80">Пройди тест, підтримай збір та отримай план відновлення.</p>
+        <button onclick="showScreen('q1')" class="btn-main">Почати</button>
     </div>
 
-    <div id="q1" class="glass-card animate__animated animate__fadeInRight">
-        <p class="opacity-50 text-sm mb-2">Крок 1 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Який твій раціон зараз?</h2>
-        <button onclick="save('diet', 'bad', 'q1', 'q2')" class="btn-premium">☕ Кава, перекуси, фастфуд</button>
-        <button onclick="save('diet', 'ok', 'q1', 'q2')" class="btn-premium">🥗 Домашня їжа, балансую</button>
-    </div>
-
-    <div id="q2" class="glass-card animate__animated animate__fadeInRight">
-        <p class="opacity-50 text-sm mb-2">Крок 2 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Скільки руху за день?</h2>
-        <button onclick="save('sport', 'low', 'q2', 'q3')" class="btn-premium">📍 Мало (сидяча робота)</button>
-        <button onclick="save('sport', 'mid', 'q2', 'q3')" class="btn-premium">🏃 Багато ходжу / Тренуюсь</button>
-    </div>
-
-    <div id="q3" class="glass-card animate__animated animate__fadeInRight">
-        <p class="opacity-50 text-sm mb-2">Крок 3 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Якість твого сну?</h2>
-        <button onclick="save('sleep', 'bad', 'q3', 'q4')" class="btn-premium">☁️ Мало, важко заснути</button>
-        <button onclick="save('sleep', 'good', 'q3', 'q4')" class="btn-premium">💤 Глибокий сон 7-8 год</button>
-    </div>
-
-    <div id="q4" class="glass-card animate__animated animate__fadeInRight">
-        <p class="opacity-50 text-sm mb-2">Крок 4 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Чи п'єш ти достатньо води?</h2>
-        <button onclick="save('water', 'low', 'q4', 'q5')" class="btn-premium">💧 Мало (тільки кава/чай)</button>
-        <button onclick="save('water', 'good', 'q4', 'q5')" class="btn-premium">🌊 П'ю 1.5-2 літри води</button>
-    </div>
-
-    <div id="q5" class="glass-card animate__animated animate__fadeInRight">
-        <p class="opacity-50 text-sm mb-2">Крок 5 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Твій рівень стресу зараз?</h2>
-        <button onclick="save('stress', 'high', 'q5', 'q6')" class="btn-premium">🔥 Висока напруга / Служба</button>
-        <button onclick="save('stress', 'low', 'q5', 'q6')" class="btn-premium">🍃 Спокійно / Контрольовано</button>
-    </div>
-
-    <div id="q6" class="glass-card animate__animated animate__fadeInRight">
-        <p class="opacity-50 text-sm mb-2">Крок 6 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Де ти тренуватимешся?</h2>
-        <button onclick="save('loc', 'home', 'q6', 'q7')" class="btn-premium">🏠 Вдома (обмежений простір)</button>
-        <button onclick="save('loc', 'street', 'q6', 'q7')" class="btn-premium">⛰️ Вулиця / Турніки / Гори</button>
-    </div>
-
-    <div id="q7" class="glass-card animate__animated animate__fadeInRight">
-        <p class="opacity-50 text-sm mb-2">Крок 7 з 7</p>
+    <div id="q1" class="glass-card">
         <h2 class="text-2xl font-bold mb-6">Твоя головна ціль?</h2>
-        <button onclick="finish('weight')" class="btn-premium">🎯 Схуднення та рельєф</button>
-        <button onclick="finish('health')" class="btn-premium">🧘‍♂️ Енергія та антистрес</button>
+        <button onclick="finish('weight')" class="btn-premium">🎯 Схуднення</button>
+        <button onclick="finish('health')" class="btn-premium">🧘‍♂️ Енергія</button>
     </div>
 
-    <div id="loading" class="glass-card animate__animated animate__fadeIn">
-        <div class="loader"></div>
-        <h2 class="text-xl font-bold">Гірський розум міркує...</h2>
-        <p class="opacity-60 text-sm mt-2">Аналізуємо твої відповіді</p>
-    </div>
-
-    <div id="result" class="glass-card animate__animated animate__zoomIn" style="max-height: 90vh; overflow-y: auto;">
-        <h2 class="text-3xl font-bold mb-6">Твій План Перезавантаження 🏔️</h2>
-        <div id="res-content"></div>
-        <div class="mt-8 pt-6 border-t border-white/20">
-            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="link-card">📹 Тренування для схуднення</a>
-            <a href="https://www.youtube.com/watch?v=p5Ke5cKA5So" target="_blank" class="link-card">📹 Відео: Основи харчування</a>
-            <a href="https://znayshov.com/News/Images/2135/tarka_zdorovogo_harchuvannya.jpg" target="_blank" class="link-card" style="background: #e8f5e9; color: #2e7d32;">📸 Схема "Здорова тарілка"</a>
-            <a href="https://www.youtube.com/watch?v=ItNWf1FDow0" target="_blank" class="link-card" style="background: #fff3e0; color: #e65100;">🎵 Музика гір для спокою</a>
+    <div id="donate" class="glass-card">
+        <h2 class="text-3xl font-bold mb-4 text-yellow-400">Підтримай ЗСУ 🇺🇦</h2>
+        <p>Для доступу до посібника, закинь будь-який донат на нашу банку.</p>
+        <div class="donate-box">
+            <a href="https://send.monobank.ua/jar/7rKuk6iVx" target="_blank" class="btn-main block text-center" style="background:#e91e63; color:white;">💰 Перейти до Банки</a>
         </div>
-        <button onclick="location.reload()" class="btn-premium mt-6 text-center" style="text-align:center">Пройти аналіз знову</button>
+        <button onclick="showScreen('result')" class="btn-premium">✅ Я підтримав!</button>
+    </div>
+
+    <div id="result" class="glass-card" style="max-height: 90vh; overflow-y: auto;">
+        <h2 class="text-2xl font-bold mb-6">Твій План 🏆</h2>
+        <img src="images/plate.jpg" onerror="this.src='https://phc.org.ua/sites/default/files/inline/images/Plate_UKR_0.jpg'" class="res-img">
+        <div class="space-y-3">
+            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="btn-premium block">📹 Урок: Схуднення</a>
+            <a href="https://www.youtube.com/watch?v=p5Ke5cKA5So" target="_blank" class="btn-premium block">📹 Урок: Харчування</a>
+        </div>
+        <button onclick="location.reload()" class="mt-8 opacity-50">Знову</button>
     </div>
 
     <script>
-        let userData = {};
-        // Використання стабільної мелодії
-        const bgMusic = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3');
-        bgMusic.loop = true;
-        bgMusic.volume = 0.3;
-
         function showScreen(id) {
-            document.querySelectorAll('.glass-card').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.glass-card').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
         }
-
-        function startApp() {
-            bgMusic.play().catch(e => console.log("Музика чекає взаємодії"));
-            showScreen('q1');
-        }
-
-        function toggleMusic() {
-            const mBtn = document.getElementById('mTrigger');
-            if (bgMusic.paused) {
-                bgMusic.play();
-                mBtn.innerText = '🔊';
-            } else {
-                bgMusic.pause();
-                mBtn.innerText = '🔇';
-            }
-        }
-
-        function save(key, val, cur, nxt) {
-            userData[key] = val;
-            showScreen(nxt);
-        }
-
-        function finish(goal) {
-            userData.goal = goal;
-            showScreen('loading');
-            
-            setTimeout(() => {
-                showScreen('result');
-                const content = document.getElementById('res-content');
-                let html = "";
-                
-                // Логіка результатів на основі відповідей
-                if (userData.stress === 'high' || userData.sleep === 'bad') {
-                    html = `
-                        <div class="res-item">
-                            <b class="text-yellow-300 text-lg">⚠️ Пріоритет: Відновлення</b><br>
-                            Твій організм зараз у стресі. Тобі критично важливо лягати до 23:00 та додати магній у раціон. Ніяких виснажливих забігів!
-                        </div>
-                        <p class="text-left mb-4">🏃 **Спорт:** Планка 30-60 сек, легкі присідання та довгі прогулянки на свіжому повітрі.</p>
-                    `;
-                } else {
-                    html = `
-                        <div class="res-item">
-                            <b class="text-green-300 text-lg">🚀 Пріоритет: Прогресія</b><br>
-                            Ти в гарному ресурсному стані! Час додати інтенсивності, щоб побачити справжній рельєф м'язів.
-                        </div>
-                        <p class="text-left mb-4">🔥 **Спорт:** 4 кола: 20 присідань, 15 віджимань, 1 хв планки. Відпочинок 1 хв.</p>
-                    `;
-                }
-                
-                html += `
-                    <div class="res-item">
-                        <b class="text-blue-300">🥗 Порада:</b><br>
-                        Дотримуйся "Правила тарілки". Оскільки води в раціоні ${userData.water === 'low' ? 'замало' : 'достатньо'}, обов'язково тримай пляшку поруч під час служби.
-                    </div>
-                `;
-                
-                content.innerHTML = html;
-            }, 3000);
-        }
+        function finish(goal) { showScreen('donate'); }
     </script>
 </body>
 </html>
