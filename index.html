@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Регенерація | Premium</title>
+    <title>Smart Регенерація | Зв'язок Перемоги</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
@@ -21,6 +21,7 @@
         .glass-card {
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 35px;
             padding: 35px;
@@ -46,24 +47,27 @@
             background: #ffffff; color: #000; padding: 18px 45px;
             border-radius: 50px; font-weight: 800; font-size: 19px;
             cursor: pointer; border: none; transition: 0.3s;
+            display: inline-block;
         }
 
-        .btn-main:hover { transform: scale(1.05); }
+        .btn-main:hover:not(:disabled) { transform: scale(1.05); }
+        .btn-main:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .input-code {
             background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 15px;
             padding: 15px; width: 100%; color: white;
-            text-align: center; font-size: 20px; font-weight: bold;
-            margin-bottom: 15px; outline: none;
+            text-align: center; font-size: 22px; font-weight: bold;
+            margin-bottom: 15px; outline: none; transition: 0.3s;
         }
+        .input-code:focus { border-color: white; background: rgba(255, 255, 255, 0.2); }
 
         .music-control {
             position: fixed; top: 20px; right: 20px;
             background: rgba(255, 255, 255, 0.2); border-radius: 50%;
             width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 1000; backdrop-filter: blur(10px);
+            cursor: pointer; z-index: 1000; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .loader {
@@ -82,87 +86,89 @@
 
     <div id="welcome" class="glass-card active-screen animate__animated animate__fadeIn">
         <h1 class="text-4xl font-bold mb-4">Smart Регенерація 🏔️</h1>
-        <p class="mb-8 opacity-80 text-lg">Персональний план відновлення. Пройди тест та підтримай наш підрозділ.</p>
+        <p class="mb-8 opacity-80 text-lg">Пройди тест на стан організму та підтримай наш підрозділ. Твій результат чекає на вершині.</p>
         <button id="startBtn" class="btn-main">Почати аналіз</button>
     </div>
 
     <div id="q1" class="glass-card">
-        <p class="opacity-50 text-sm mb-2">Питання 1 з 7</p>
+        <p class="opacity-50 text-sm mb-2">Крок 1 з 7</p>
         <h2 class="text-2xl font-bold mb-6">Який твій раціон зараз?</h2>
-        <button onclick="record('diet', 'bad', 'q2')" class="btn-premium">☕ Багато кави та перекуси</button>
-        <button onclick="record('diet', 'ok', 'q2')" class="btn-premium">🥗 Домашня їжа, балансую</button>
+        <button onclick="record('diet', 'bad', 'q2')" class="btn-premium">☕ Багато кави та перекуси на ходу</button>
+        <button onclick="record('diet', 'ok', 'q2')" class="btn-premium">🥗 Домашня їжа, балансую раціон</button>
     </div>
 
     <div id="q2" class="glass-card">
-        <p class="opacity-50 text-sm mb-2">Питання 2 з 7</p>
+        <p class="opacity-50 text-sm mb-2">Крок 2 з 7</p>
         <h2 class="text-2xl font-bold mb-6">Рівень активності за день?</h2>
-        <button onclick="record('sport', 'low', 'q3')" class="btn-premium">📍 Мало (сидяча робота)</button>
-        <button onclick="record('sport', 'mid', 'q3')" class="btn-premium">🏃 Багато ходжу / Тренуюсь</button>
+        <button onclick="record('sport', 'low', 'q3')" class="btn-premium">📍 Мало (переважно сидяча робота)</button>
+        <button onclick="record('sport', 'mid', 'q3')" class="btn-premium">🏃 Багато ходжу / Легкі тренування</button>
     </div>
 
     <div id="q3" class="glass-card">
-        <p class="opacity-50 text-sm mb-2">Питання 3 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Як ти оцінюєш свій сон?</h2>
-        <button onclick="record('sleep', 'bad', 'q4')" class="btn-premium">☁️ Менше 6 годин, важко заснути</button>
+        <p class="opacity-50 text-sm mb-2">Крок 3 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Як ти спиш?</h2>
+        <button onclick="record('sleep', 'bad', 'q4')" class="btn-premium">☁️ Менше 6 годин, сон переривчастий</button>
         <button onclick="record('sleep', 'good', 'q4')" class="btn-premium">💤 Глибокий сон 7-8 годин</button>
     </div>
 
     <div id="q4" class="glass-card">
-        <p class="opacity-50 text-sm mb-2">Питання 4 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Чи п'єш ти достатньо води?</h2>
-        <button onclick="record('water', 'low', 'q5')" class="btn-premium">💧 Мало (переважно кава/чай)</button>
-        <button onclick="record('water', 'good', 'q5')" class="btn-premium">🌊 П'ю 1.5-2 літри на день</button>
+        <p class="opacity-50 text-sm mb-2">Крок 4 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Скільки чистої води п'єш?</h2>
+        <button onclick="record('water', 'low', 'q5')" class="btn-premium">💧 Мало (переважно кава або чай)</button>
+        <button onclick="record('water', 'good', 'q5')" class="btn-premium">🌊 П'ю 1.5 - 2 літри щодня</button>
     </div>
 
     <div id="q5" class="glass-card">
-        <p class="opacity-50 text-sm mb-2">Питання 5 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Твій рівень стресу зараз?</h2>
-        <button onclick="record('stress', 'high', 'q6')" class="btn-premium">🔥 Високий (служба / напруга)</button>
+        <p class="opacity-50 text-sm mb-2">Крок 5 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Твій рівень стресу?</h2>
+        <button onclick="record('stress', 'high', 'q6')" class="btn-premium">🔥 Високий (служба / постійна напруга)</button>
         <button onclick="record('stress', 'low', 'q6')" class="btn-premium">🍃 Помірний (все під контролем)</button>
     </div>
 
     <div id="q6" class="glass-card">
-        <p class="opacity-50 text-sm mb-2">Питання 6 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Де ти плануєш тренуватися?</h2>
+        <p class="opacity-50 text-sm mb-2">Крок 6 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Де будеш тренуватися?</h2>
         <button onclick="record('loc', 'home', 'q7')" class="btn-premium">🏠 Вдома (обмежений простір)</button>
-        <button onclick="record('loc', 'street', 'q7')" class="btn-premium">⛰️ Вулиця / Турніки / Гори</button>
+        <button onclick="record('loc', 'street', 'q7')" class="btn-premium">⛰️ Вулиця / Турніки / Парк</button>
     </div>
 
     <div id="q7" class="glass-card">
-        <p class="opacity-50 text-sm mb-2">Питання 7 з 7</p>
-        <h2 class="text-2xl font-bold mb-6">Яка твоя головна ціль?</h2>
+        <p class="opacity-50 text-sm mb-2">Крок 7 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Твоя головна ціль?</h2>
         <button onclick="record('goal', 'weight', 'loading')" class="btn-premium">🎯 Схуднення та рельєф</button>
         <button onclick="record('goal', 'health', 'loading')" class="btn-premium">🧘‍♂️ Енергія та антистрес</button>
     </div>
 
     <div id="loading" class="glass-card">
         <div class="loader"></div>
-        <h2 class="text-xl font-bold">Гірський розум міркує...</h2>
+        <h2 class="text-xl font-bold">Алгоритм обробляє метадані...</h2>
     </div>
 
     <div id="donate" class="glass-card animate__animated animate__fadeIn">
         <h2 class="text-3xl font-bold mb-4 text-yellow-300">Підтримай ЗСУ 🇺🇦</h2>
-        <p class="mb-4 opacity-90 text-sm leading-relaxed">Твій план готовий! Щоб відкрити посібник, підтримай наш збір. **Секретний код з'явиться у привітанні після оплати.**</p>
+        <p class="mb-4 opacity-90 text-sm leading-relaxed">План сформовано! Для отримання доступу, зроби донат на потреби вузла зв'язку. **Секретний код з'явиться у привітанні після оплати.**</p>
         
-        <div style="background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.3); border-radius: 20px; padding: 25px; margin: 20px 0;">
-            <p class="text-xs mb-3 font-bold uppercase tracking-wider">На потреби вузла зв'язку</p>
-            <a href="https://send.monobank.ua/jar/7rKuk6iVxV" target="_blank" class="btn-main block text-center" style="background:#e91e63; color:white; font-size:16px;">💰 До Банки Monobank</a>
+        <div style="background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.4); border-radius: 20px; padding: 25px; margin: 20px 0;">
+            <a href="https://send.monobank.ua/jar/7rKuk6iVxV" target="_blank" onclick="handleBankClick()" class="btn-main block text-center" style="background:#e91e63; color:white; font-size:16px;">💰 До Банки Monobank</a>
         </div>
         
-        <input type="text" id="accessCode" class="input-code" placeholder="Введіть секретний код">
-        <button onclick="verifyCode()" class="btn-premium" style="text-align:center; background:rgba(76, 175, 80, 0.3); border-color:#4caf50;">✅ Відкрити посібник</button>
-        <p id="errorMsg" class="text-red-400 text-sm mt-2 hidden">Невірний код. Перевір привітання в банці.</p>
+        <input type="text" id="accessCode" class="input-code" placeholder="Введіть код">
+        <button id="verifyBtn" onclick="verifyCode()" class="btn-premium" style="text-align:center; background:rgba(76, 175, 80, 0.3); border-color:#4caf50;" disabled>
+            Очікування переходу до банки...
+        </button>
+        <p id="errorMsg" class="text-red-400 text-sm mt-2 hidden font-bold">Невірний код. Перевір привітання в банці!</p>
     </div>
 
     <div id="result" class="glass-card animate__animated animate__zoomIn" style="max-height: 90vh; overflow-y: auto;">
-        <h2 class="text-2xl font-bold mb-6">Твій План Перезавантаження 🏆</h2>
-        <img src="https://znayshov.com/News/Images/2135/tarka_zdorovogo_harchuvannya.jpg" class="res-img" alt="Тарілка">
+        <h2 class="text-3xl font-bold mb-6">Твій План Перезавантаження 🏆</h2>
+        
+        <img src="images/plate.jpg" onerror="this.src='https://phc.org.ua/sites/default/files/inline/images/Plate_UKR_0.jpg'" class="res-img" alt="Здорова тарілка">
         
         <div id="res-content" class="text-left space-y-4 mb-8">
             </div>
 
         <div class="space-y-3">
-            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="btn-premium block" style="text-align:center; background:rgba(255,255,255,0.2);">📹 Урок: Спалення жиру</a>
+            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="btn-premium block" style="text-align:center; background:rgba(255,255,255,0.2);">📹 Тренування: Спалення жиру</a>
             <a href="https://www.youtube.com/watch?v=p5Ke5cKA5So" target="_blank" class="btn-premium block" style="text-align:center; background:rgba(255,255,255,0.2);">📹 Урок: Основи харчування</a>
             <a href="https://www.youtube.com/watch?v=ItNWf1FDow0" target="_blank" class="btn-premium block" style="text-align:center; color:#facc15; border-color:#facc15;">🎵 Музика гір для релаксу</a>
         </div>
@@ -176,13 +182,11 @@
         bgMusic.volume = 0.3;
 
         function showScreen(id) {
-            // Приховуємо абсолютно всі картки
             const screens = document.querySelectorAll('.glass-card');
             screens.forEach(s => {
                 s.style.display = 'none';
                 s.classList.remove('active-screen');
             });
-            // Показуємо потрібну
             const target = document.getElementById(id);
             if(target) {
                 target.style.display = 'block';
@@ -191,9 +195,8 @@
             }
         }
 
-        // Кнопка початку
         document.getElementById('startBtn').addEventListener('click', function() {
-            bgMusic.play().catch(e => console.log("Браузер заблокував звук"));
+            bgMusic.play().catch(e => console.log("Music blocked"));
             showScreen('q1');
         });
 
@@ -207,11 +210,29 @@
             }
         }
 
+        function handleBankClick() {
+            const btn = document.getElementById('verifyBtn');
+            let timeLeft = 15;
+            btn.disabled = true;
+            btn.innerText = `Перевірка (зачекайте ${timeLeft}с)...`;
+
+            const timer = setInterval(() => {
+                timeLeft--;
+                btn.innerText = `Перевірка (зачекайте ${timeLeft}с)...`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    btn.disabled = false;
+                    btn.style.background = "rgba(76, 175, 80, 0.4)";
+                    btn.innerText = "✅ Перейти до результатів";
+                }
+            }, 1000);
+        }
+
         function verifyCode() {
             const codeInput = document.getElementById('accessCode').value.trim().toUpperCase();
             const error = document.getElementById('errorMsg');
             
-            // Твій секретний код (налаштуй його в банці Monobank)
+            // Твій секретний код
             if (codeInput === "ZVYAZOK") {
                 showScreen('result');
             } else {
@@ -232,20 +253,19 @@
             if (userData.stress === 'high' || userData.sleep === 'bad') {
                 html = `<div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 4px solid #facc15; border-radius: 10px;">
                     <h4 style="color: #facc15; font-weight: bold;">Пріоритет: Регенерація</h4>
-                    <p class="text-sm">Твій організм на межі виснаження. Фокусуйся на сні до 23:00 та медитації. Ніяких важких тренувань!</p>
+                    <p class="text-sm">Твій організм на межі виснаження. Фокусуйся на сні до 23:00 та медитації. Обирай легкі навантаження.</p>
                 </div>`;
             } else {
                 html = `<div style="background: rgba(255,255,255,0.05); padding: 15px; border-left: 4px solid #4ade80; border-radius: 10px;">
-                    <h4 style="color: #4ade80; font-weight: bold;">Пріоритет: Інтенсив</h4>
-                    <p class="text-sm">Ти в ресурсі. Час для інтенсивних вправ: 4 кола (присідання, віджимання, планка).</p>
+                    <h4 style="color: #4ade80; font-weight: bold;">Пріоритет: Інтенсивний прогрес</h4>
+                    <p class="text-sm">Ти в ресурсі! Час для інтенсивних вправ: 4 кола (присідання, віджимання, планка).</p>
                 </div>`;
             }
             html += `<p class="text-sm mt-4">🥗 <b>Харчування:</b> Дотримуйся схеми "Тарілки" вище. Твій питний режим (${userData.water === 'low' ? 'треба покращити' : 'чудовий'}) — це база енергії.</p>
-                     <p class="text-xs opacity-50 mt-2">Дякуємо за підтримку потреб вузла зв'язку! Разом до перемоги.</p>`;
+                     <p class="text-xs opacity-50 mt-2 italic text-center">Дякуємо за підтримку потреб вузла зв'язку! Разом до перемоги.</p>`;
             content.innerHTML = html;
         }
 
-        // Гарантуємо запуск першого екрану
         window.onload = () => showScreen('welcome');
     </script>
 </body>
