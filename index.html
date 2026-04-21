@@ -3,196 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Регенерація | Надійний План</title>
+    <title>Smart Регенерація | Premium</title>
     <style>
-        /* ЧИСТИЙ CSS БЕЗ ЗОВНІШНІХ БІБЛІОТЕК */
-        * { box-sizing: border-box; }
-        
+        /* ПОВНИЙ КОНТРОЛЬ СТИЛІВ */
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: #2c3e50 url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #000 url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
             background-size: cover;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
+            overflow: hidden;
         }
 
-        .main-container {
-            background: rgba(255, 255, 255, 0.95); /* Майже білий фон для 100% видимості */
-            color: #1a1a1a;
-            padding: 30px;
-            width: 95%;
-            max-width: 500px;
-            border-radius: 20px;
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 40px;
+            width: 90%;
+            max-width: 550px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            z-index: 10;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+            display: none; /* Ховаємо всі за замовчуванням */
         }
 
-        .screen { display: none; }
-        .active { display: block !important; }
+        /* Показуємо тільки активний екран */
+        #welcome.active, #q1.active, #q2.active, #q3.active, #q4.active, #q5.active, #q6.active, #q7.active, #loading.active, #result.active {
+            display: block !important;
+        }
 
-        h1 { font-size: 28px; margin-bottom: 15px; color: #333; }
-        h2 { font-size: 22px; margin-bottom: 20px; color: #444; }
-        p { line-height: 1.5; color: #666; margin-bottom: 25px; }
+        h1 { font-size: 32px; margin-bottom: 10px; font-weight: 700; }
+        p { font-size: 18px; opacity: 0.8; margin-bottom: 30px; }
 
-        /* ВЕЛИКІ ЧОРНІ КНОПКИ */
-        .btn-action {
-            background: #000;
-            color: #fff;
-            padding: 18px 40px;
-            border-radius: 10px;
-            font-weight: bold;
+        /* ТА САМА ПРОЗОРА КНОПКА */
+        .btn-premium {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 18px 30px;
+            border-radius: 15px;
             font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-premium:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-start {
+            background: #fff;
+            color: #000;
             border: none;
-            width: 100%;
-            margin-top: 10px;
-            transition: 0.2s;
-        }
-
-        .btn-action:hover { background: #333; transform: scale(1.02); }
-
-        .btn-option {
-            background: #f4f4f4;
-            border: 2px solid #ddd;
-            padding: 15px;
-            border-radius: 12px;
-            width: 100%;
-            text-align: left;
-            margin-bottom: 12px;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: 0.2s;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.2);
         }
 
-        .btn-option:hover {
-            background: #e9ecef;
-            border-color: #000;
-        }
+        .btn-start:hover { transform: scale(1.05); background: #f0f0f0; }
 
-        .music-btn {
+        .music-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #000;
-            color: #fff;
-            border: none;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.4);
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            color: white;
             cursor: pointer;
-            font-size: 20px;
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 100;
+            font-size: 20px;
         }
 
         .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #000;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid #fff;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 30px auto;
         }
-
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .result-item {
-            background: #f8f9fa;
-            border-left: 5px solid #000;
-            padding: 15px;
-            margin-bottom: 15px;
+        .res-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #fff;
+            padding: 20px;
             text-align: left;
+            margin-bottom: 20px;
         }
 
-        .link-btn {
+        .final-link {
             display: block;
-            background: #007bff;
-            color: white;
-            padding: 12px;
+            background: white;
+            color: black;
             text-decoration: none;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 12px;
             margin-bottom: 10px;
-            font-weight: bold;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
 
-    <button class="music-btn" onclick="toggleMusic()" id="musicTrigger">🔊</button>
+    <button class="music-toggle" onclick="toggleMusic()" id="mBtn">🔊</button>
 
-    <div class="main-container">
-        
-        <div id="welcome" class="screen active">
-            <h1>Smart Регенерація 🏔️</h1>
-            <p>Персональний план відновлення. Пройди тест за 1 хвилину.</p>
-            <button onclick="startApp()" class="btn-action">Почати аналіз</button>
-        </div>
+    <div id="welcome" class="glass-container active">
+        <h1>Smart Регенерація 🏔️</h1>
+        <p>Персональний план відновлення серед безмежних гір.</p>
+        <button onclick="startApp()" class="btn-start">Почати аналіз</button>
+    </div>
 
-        <div id="q1" class="screen">
-            <h2>1/7 Твій раціон?</h2>
-            <button onclick="save('diet', 'bad', 'q1', 'q2')" class="btn-option">☕ Кава, перекуси, фастфуд</button>
-            <button onclick="save('diet', 'ok', 'q1', 'q2')" class="btn-option">🥗 Домашня їжа, балансую</button>
-        </div>
+    <div id="q1" class="glass-container">
+        <h2>1/7 Як ти харчуєшся?</h2>
+        <button onclick="save('diet', 'bad', 'q1', 'q2')" class="btn-premium">☕ Кава, перекуси, фастфуд</button>
+        <button onclick="save('diet', 'ok', 'q1', 'q2')" class="btn-premium">🥗 Домашня їжа, балансую</button>
+    </div>
 
-        <div id="q2" class="screen">
-            <h2>2/7 Рівень руху?</h2>
-            <button onclick="save('sport', 'low', 'q2', 'q3')" class="btn-option">📍 Мало (сидяча робота)</button>
-            <button onclick="save('sport', 'mid', 'q2', 'q3')" class="btn-option">🏃 Багато ходжу</button>
-        </div>
+    <div id="q2" class="glass-container">
+        <h2>2/7 Рівень руху?</h2>
+        <button onclick="save('sport', 'low', 'q2', 'q3')" class="btn-premium">📍 Сидяча робота</button>
+        <button onclick="save('sport', 'mid', 'q2', 'q3')" class="btn-premium">🏃 Активно ходжу</button>
+    </div>
 
-        <div id="q3" class="screen">
-            <h2>3/7 Якість сну?</h2>
-            <button onclick="save('sleep', 'bad', 'q3', 'q4')" class="btn-option">☁️ Мало, важко заснути</button>
-            <button onclick="save('sleep', 'good', 'q3', 'q4')" class="btn-option">💤 Сплю добре 7-8 год</button>
-        </div>
+    <div id="q3" class="glass-container">
+        <h2>3/7 Якість сну?</h2>
+        <button onclick="save('sleep', 'bad', 'q3', 'q4')" class="btn-premium">☁️ Мало, важко заснути</button>
+        <button onclick="save('sleep', 'good', 'q3', 'q4')" class="btn-premium">💤 Сплю добре 7-8 год</button>
+    </div>
 
-        <div id="q4" class="screen">
-            <h2>4/7 П'єш воду?</h2>
-            <button onclick="save('water', 'low', 'q4', 'q5')" class="btn-option">💧 Мало (кава/чай)</button>
-            <button onclick="save('water', 'good', 'q4', 'q5')" class="btn-option">🌊 П'ю достатньо</button>
-        </div>
+    <div id="q4" class="glass-container">
+        <h2>4/7 П'єш воду?</h2>
+        <button onclick="save('water', 'low', 'q4', 'q5')" class="btn-premium">💧 Мало (кава/чай)</button>
+        <button onclick="save('water', 'good', 'q4', 'q5')" class="btn-premium">🌊 П'ю достатньо</button>
+    </div>
 
-        <div id="q5" class="screen">
-            <h2>5/7 Стрес?</h2>
-            <button onclick="save('stress', 'high', 'q5', 'q6')" class="btn-option">🔥 Висока напруга</button>
-            <button onclick="save('stress', 'low', 'q5', 'q6')" class="btn-option">🍃 Спокійно</button>
-        </div>
+    <div id="q5" class="glass-container">
+        <h2>5/7 Стрес?</h2>
+        <button onclick="save('stress', 'high', 'q5', 'q6')" class="btn-premium">🔥 Висока напруга</button>
+        <button onclick="save('stress', 'low', 'q5', 'q6')" class="btn-premium">🍃 Спокійно</button>
+    </div>
 
-        <div id="q6" class="screen">
-            <h2>6/7 Де тренуєшся?</h2>
-            <button onclick="save('loc', 'home', 'q6', 'q7')" class="btn-option">🏠 Вдома</button>
-            <button onclick="save('loc', 'street', 'q6', 'q7')" class="btn-option">⛰️ Вулиця / Гори</button>
-        </div>
+    <div id="q6" class="glass-container">
+        <h2>6/7 Де тренуєшся?</h2>
+        <button onclick="save('loc', 'home', 'q6', 'q7')" class="btn-premium">🏠 Вдома</button>
+        <button onclick="save('loc', 'street', 'q6', 'q7')" class="btn-premium">⛰️ Вулиця / Гори</button>
+    </div>
 
-        <div id="q7" class="screen">
-            <h2>7/7 Твоя мета?</h2>
-            <button onclick="finish('weight')" class="btn-option">🎯 Схуднення</button>
-            <button onclick="finish('health')" class="btn-option">🧘‍♂️ Енергія</button>
-        </div>
+    <div id="q7" class="glass-container">
+        <h2>7/7 Твоя мета?</h2>
+        <button onclick="finish('weight')" class="btn-premium">🎯 Схуднення</button>
+        <button onclick="finish('health')" class="btn-premium">🧘‍♂️ Енергія</button>
+    </div>
 
-        <div id="loading" class="screen">
-            <div class="loader"></div>
-            <h2>Аналізуємо дані...</h2>
-        </div>
+    <div id="loading" class="glass-container">
+        <div class="loader"></div>
+        <h2>Гірський розум міркує...</h2>
+    </div>
 
-        <div id="result" class="screen">
-            <h2>Твій План 🏆</h2>
-            <div id="res-text"></div>
-            <br>
-            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="link-btn">📹 Тренування</a>
-            <a href="https://phc.org.ua/sites/default/files/inline/images/Plate_UKR_0.jpg" target="_blank" class="link-btn" style="background:#28a745;">📸 Схема харчування</a>
-            <button onclick="location.reload()" class="btn-action">Знову</button>
-        </div>
-
+    <div id="result" class="glass-container" style="max-height: 90vh; overflow-y: auto;">
+        <h2>Твій План 🏆</h2>
+        <div id="res-content"></div>
+        <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="final-link">📹 Тренування</a>
+        <a href="https://phc.org.ua/sites/default/files/inline/images/Plate_UKR_0.jpg" target="_blank" class="final-link">📸 Схема харчування</a>
+        <button onclick="location.reload()" class="btn-premium" style="margin-top:20px">Знову</button>
     </div>
 
     <script>
@@ -206,17 +202,12 @@
         }
 
         function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                document.getElementById('musicTrigger').innerText = '🔊';
-            } else {
-                music.pause();
-                document.getElementById('musicTrigger').innerText = '🔇';
-            }
+            if (music.paused) { music.play(); document.getElementById('mBtn').innerText = '🔊'; }
+            else { music.pause(); document.getElementById('mBtn').innerText = '🔇'; }
         }
 
         function show(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.glass-container').forEach(c => c.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
@@ -230,16 +221,16 @@
             show('loading');
             setTimeout(() => {
                 show('result');
-                const resText = document.getElementById('res-text');
+                const content = document.getElementById('res-content');
                 let html = "";
                 if (data.stress === 'high' || data.sleep === 'bad') {
-                    html = "<div class='result-item'><b>Пріоритет: Відновлення.</b> Твій організм потребує спокою. Більше сну та легкої розтяжки.</div>";
+                    html = "<div class='res-box'><b>Відновлення:</b> Тобі потрібен спокій. Спи більше, пий магній і слухай музику гір.</div>";
                 } else {
-                    html = "<div class='result-item'><b>Пріоритет: Прогрес.</b> Ти в нормі! Додавай інтенсивності (віджимання, присідання).</div>";
+                    html = "<div class='res-box'><b>Прогрес:</b> Ти в ресурсі! Додавай інтенсивні вправи з нашого списку.</div>";
                 }
-                html += `<div class='result-item'>💧 <b>Вода:</b> ${data.water === 'low' ? 'Пий більше!' : 'Чудово.'}</div>`;
-                resText.innerHTML = html;
-            }, 2500);
+                html += `<div class='res-box'>💧 <b>Вода:</b> ${data.water === 'low' ? 'Пий більше!' : 'Все добре.'}</div>`;
+                content.innerHTML = html;
+            }, 3000);
         }
     </script>
 </body>
