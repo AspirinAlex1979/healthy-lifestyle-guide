@@ -5,68 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Регенерація | Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
         body {
-            margin: 0; padding: 0; font-family: 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: #000 url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
-            background-size: cover; color: white; height: 100vh; display: flex; align-items: center; justify-content: center;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin: 0;
+            overflow: hidden;
         }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 40px; padding: 40px;
-            width: 95%; max-width: 550px; text-align: center; display: none;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 35px;
+            padding: 35px;
+            width: 95%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            display: none; /* Всі сховані за замовчуванням */
         }
-        .active { display: block !important; }
+
+        /* Тільки цей клас робить вікно видимим */
+        .active-screen { display: block !important; }
+
         .btn-premium {
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.4);
-            color: white; padding: 18px; border-radius: 15px; width: 100%; margin-bottom: 12px; cursor: pointer; text-align: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 15px;
+            width: 100%;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-weight: 500;
         }
+
+        .btn-premium:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
         .btn-main {
-            background: #ffffff; color: #000; padding: 20px 50px; border-radius: 50px; font-weight: 800; cursor: pointer; border: none;
+            background: #ffffff;
+            color: #000000;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 19px;
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
         }
-        .donate-box { background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.4); border-radius: 20px; padding: 20px; margin: 20px 0; }
-        .res-img { width: 100%; border-radius: 20px; margin-bottom: 20px; }
+
+        .btn-main:hover { transform: scale(1.05); }
+
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .loader {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 50px; height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .donate-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .res-img { width: 100%; border-radius: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body>
 
-    <div id="welcome" class="glass-card active">
+    <div class="music-control" onclick="toggleMusic()" id="mTrigger">🔊</div>
+
+    <div id="welcome" class="glass-card active-screen animate__animated animate__fadeIn">
         <h1 class="text-4xl font-bold mb-4">Smart Регенерація 🏔️</h1>
-        <p class="mb-8 opacity-80">Пройди тест, підтримай збір та отримай план відновлення.</p>
-        <button onclick="showScreen('q1')" class="btn-main">Почати</button>
+        <p class="mb-8 opacity-80 text-lg">Персональний план відновлення. Пройди тест та підтримай наш збір.</p>
+        <button onclick="startApp()" class="btn-main">Почати аналіз</button>
     </div>
 
-    <div id="q1" class="glass-card">
+    <div id="q1" class="glass-card animate__animated animate__fadeInRight">
+        <p class="opacity-50 text-sm mb-2">Питання 1 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Який твій раціон зараз?</h2>
+        <button onclick="record('diet', 'bad', 'q2')" class="btn-premium">☕ Багато кави та перекуси</button>
+        <button onclick="record('diet', 'ok', 'q2')" class="btn-premium">🥗 Домашня їжа, балансую</button>
+    </div>
+
+    <div id="q2" class="glass-card animate__animated animate__fadeInRight">
+        <p class="opacity-50 text-sm mb-2">Питання 2 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Скільки руху за день?</h2>
+        <button onclick="record('sport', 'low', 'q3')" class="btn-premium">📍 Мало (сидяча робота)</button>
+        <button onclick="record('sport', 'mid', 'q3')" class="btn-premium">🏃 Активно ходжу / Тренуюсь</button>
+    </div>
+
+    <div id="q3" class="glass-card animate__animated animate__fadeInRight">
+        <p class="opacity-50 text-sm mb-2">Питання 3 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Якість твого сну?</h2>
+        <button onclick="record('sleep', 'bad', 'q4')" class="btn-premium">☁️ Мало, важко заснути</button>
+        <button onclick="record('sleep', 'good', 'q4')" class="btn-premium">💤 Глибокий сон 7-8 год</button>
+    </div>
+
+    <div id="q4" class="glass-card animate__animated animate__fadeInRight">
+        <p class="opacity-50 text-sm mb-2">Питання 4 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Чи п'єш достатньо води?</h2>
+        <button onclick="record('water', 'low', 'q5')" class="btn-premium">💧 Мало (тільки кава/чай)</button>
+        <button onclick="record('water', 'good', 'q5')" class="btn-premium">🌊 П'ю 1.5-2 літри на день</button>
+    </div>
+
+    <div id="q5" class="glass-card animate__animated animate__fadeInRight">
+        <p class="opacity-50 text-sm mb-2">Питання 5 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Рівень стресу зараз?</h2>
+        <button onclick="record('stress', 'high', 'q6')" class="btn-premium">🔥 Високий (служба / напруга)</button>
+        <button onclick="record('stress', 'low', 'q6')" class="btn-premium">🍃 Помірний (спокійний)</button>
+    </div>
+
+    <div id="q6" class="glass-card animate__animated animate__fadeInRight">
+        <p class="opacity-50 text-sm mb-2">Питання 6 з 7</p>
+        <h2 class="text-2xl font-bold mb-6">Де будеш тренуватися?</h2>
+        <button onclick="record('loc', 'home', 'q7')" class="btn-premium">🏠 Вдома (обмежений простір)</button>
+        <button onclick="record('loc', 'street', 'q7')" class="btn-premium">⛰️ Вулиця / Турніки</button>
+    </div>
+
+    <div id="q7" class="glass-card animate__animated animate__fadeInRight">
+        <p class="opacity-50 text-sm mb-2">Питання 7 з 7</p>
         <h2 class="text-2xl font-bold mb-6">Твоя головна ціль?</h2>
-        <button onclick="finish('weight')" class="btn-premium">🎯 Схуднення</button>
-        <button onclick="finish('health')" class="btn-premium">🧘‍♂️ Енергія</button>
+        <button onclick="record('goal', 'weight', 'loading')" class="btn-premium">🎯 Схуднення та рельєф</button>
+        <button onclick="record('goal', 'health', 'loading')" class="btn-premium">🧘‍♂️ Енергія та антистрес</button>
     </div>
 
-    <div id="donate" class="glass-card">
-        <h2 class="text-3xl font-bold mb-4 text-yellow-400">Підтримай ЗСУ 🇺🇦</h2>
-        <p>Для доступу до посібника, закинь будь-який донат на нашу банку.</p>
+    <div id="loading" class="glass-card animate__animated animate__fadeIn">
+        <div class="loader"></div>
+        <h2 class="text-xl font-bold">Алгоритм обробляє дані...</h2>
+    </div>
+
+    <div id="donate" class="glass-card animate__animated animate__fadeIn">
+        <h2 class="text-3xl font-bold mb-4 text-yellow-300">Підтримай ЗСУ 🇺🇦</h2>
+        <p class="mb-4">Твій план сформовано! Для доступу до відео-уроків та повної схеми, зроби донат на нашу банку.</p>
         <div class="donate-box">
-            <a href="https://send.monobank.ua/jar/7rKuk6iVx" target="_blank" class="btn-main block text-center" style="background:#e91e63; color:white;">💰 Перейти до Банки</a>
+            <a href="https://send.monobank.ua/jar/7rKuk6iVxV" target="_blank" class="btn-main block text-center" style="background:#e91e63; color:white; font-size:16px;">💰 Перейти до Банки</a>
         </div>
-        <button onclick="showScreen('result')" class="btn-premium">✅ Я підтримав!</button>
+        <p class="text-xs opacity-60 mb-6 italic">Натисни кнопку нижче після того, як підтримаєш збір.</p>
+        <button onclick="showScreen('result')" class="btn-premium" style="text-align:center; background:rgba(76,175,80,0.2);">✅ Я підтримав проєкт</button>
     </div>
 
-    <div id="result" class="glass-card" style="max-height: 90vh; overflow-y: auto;">
+    <div id="result" class="glass-card animate__animated animate__zoomIn" style="max-height: 90vh; overflow-y: auto;">
         <h2 class="text-2xl font-bold mb-6">Твій План 🏆</h2>
-        <img src="images/plate.jpg" onerror="this.src='https://phc.org.ua/sites/default/files/inline/images/Plate_UKR_0.jpg'" class="res-img">
+        <img src="https://phc.org.ua/sites/default/files/inline/images/Plate_UKR_0.jpg" class="res-img" alt="Тарілка">
+        <div id="res-content" class="text-left space-y-4 mb-8"></div>
         <div class="space-y-3">
-            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="btn-premium block">📹 Урок: Схуднення</a>
-            <a href="https://www.youtube.com/watch?v=p5Ke5cKA5So" target="_blank" class="btn-premium block">📹 Урок: Харчування</a>
+            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="btn-premium block" style="text-align:center;">📹 Урок: Спалення жиру</a>
+            <a href="https://www.youtube.com/watch?v=p5Ke5cKA5So" target="_blank" class="btn-premium block" style="text-align:center;">📹 Урок: Харчування</a>
         </div>
-        <button onclick="location.reload()" class="mt-8 opacity-50">Знову</button>
+        <button onclick="location.reload()" class="mt-8 opacity-40 hover:opacity-100 transition-all text-sm">Пройти знову</button>
     </div>
 
     <script>
-        function showScreen(id) {
-            document.querySelectorAll('.glass-card').forEach(s => s.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
+        let userData = {};
+        const bgMusic = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3');
+        bgMusic.loop = true;
+
+        // Найголовніша функція: ховає ВСЕ, показує ОДНЕ
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('.glass-card');
+            screens.forEach(s => s.classList.remove('active-screen'));
+            
+            const target = document.getElementById(screenId);
+            if (target) {
+                target.classList.add('active-screen');
+            }
         }
-        function finish(goal) { showScreen('donate'); }
-    </script>
-</body>
-</html>
+
+        function startApp() {
+            bgMusic.play().catch(e => console.log("Music blocked"));
+            showScreen('q1');
+        }
+
+        function record(key, val, nextId) {
+            userData[key] = val;
+            if (nextId === 'loading') {
+                showScreen('loading');
+                setTimeout(() => { showScreen('donate'); }, 3000);
+            } else {
+                showScreen(nextId);
+            }
+        }
+
+        function toggleMusic() {
+            const mBtn = document.getElementById('mTrigger');
+            if (bgMusic.paused) { bgMusic.play(); mBtn.innerText = '🔊'; }
+            else { bgMusic.pause(); m
