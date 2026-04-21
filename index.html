@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Регенерація | Premium</title>
+    <title>Smart Регенерація | Надійний План</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
@@ -11,7 +11,7 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), 
                               url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070');
             background-size: cover;
             background-position: center;
@@ -22,10 +22,10 @@
         }
 
         .glass-card { 
-            background: rgba(255, 255, 255, 0.1); 
+            background: rgba(255, 255, 255, 0.12); 
             backdrop-filter: blur(20px); 
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 40px;
+            border-radius: 35px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
 
@@ -33,111 +33,10 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 999;
-            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-modern {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            width: 100%;
-            text-align: left;
-            transition: all 0.3s ease;
-        }
-
-        .btn-modern:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .btn-main {
-            background: #fff;
-            color: #000;
-            padding: 18px 50px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
-        }
-
-        .loader {
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top: 4px solid #fff;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .hidden { display: none !important; }
-    </style>
-</head>
-<body class="min-h-screen flex items-center justify-center p-6">
-
-    <div class="music-toggle" onclick="toggleMusic()">
-        <span id="musicIcon">🔊</span>
-    </div>
-
-    <div id="screen-welcome" class="glass-card p-12 max-w-xl w-full text-center animate__animated animate__zoomIn">
-        <h1 class="text-5xl font-bold mb-6">Smart Регенерація 🏔️</h1>
-        <p class="text-xl opacity-80 mb-10 font-light">Твій персональний план відновлення у безмежних горах.</p>
-        <button onclick="startApp()" class="btn-main">Почати аналіз</button>
-    </div>
-
-    <div id="screen-q1" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="opacity-50 text-sm mb-2">1 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Який твій раціон зараз?</h2>
-        <div class="space-y-4">
-            <button onclick="record('diet', 'bad', 'q1', 'q2')" class="btn-modern">☕ Багато кави, перекуси, фастфуд</button>
-            <button onclick="record('diet', 'ok', 'q1', 'q2')" class="btn-modern">🥗 Домашня їжа, стараюсь балансувати</button>
-        </div>
-    </div>
-
-    <div id="screen-q2" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="opacity-50 text-sm mb-2">2 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Рівень руху за день?</h2>
-        <div class="space-y-4">
-            <button onclick="record('sport', 'low', 'q2', 'q3')" class="btn-modern">📍 Переважно сидяча робота</button>
-            <button onclick="record('sport', 'mid', 'q2', 'q3')" class="btn-modern">🏃 Багато ходжу, легка активність</button>
-        </div>
-    </div>
-
-    <div id="screen-q3" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="opacity-50 text-sm mb-2">3 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Якість твого сну?</h2>
-        <div class="space-y-4">
-            <button onclick="record('sleep', 'bad', 'q3', 'q4')" class="btn-modern">☁️ Менше 6 год, важко заснути</button>
-            <button onclick="record('sleep', 'good', 'q3', 'q4')" class="btn-modern">💤 Глибокий сон 7-8 год</button>
-        </div>
-    </div>
-
-    <div id="screen-q4" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="opacity-50 text-sm mb-2">4 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Чи п'єш достатньо води?</h2>
-        <div class="space-y-4">
-            <button onclick="record('water', 'low', 'q4', 'q5')" class="btn-modern">💧 П'ю замало (кава/чай)</button>
-            <button onclick="record('water', 'good', 'q4', 'q5')" class="btn-modern">🌊 П'ю 1.5-2 літри води</button>
-        </div>
-    </div>
-
-    <div id="screen-q5" class="glass-card p-10 max-w-lg w-full hidden animate__animated animate__fadeIn">
-        <p class="opacity-50 text-sm mb-2">5 / 7</p>
-        <h2 class="text-3xl font-semibold mb-8">Рівень стресу зараз?</h2>
-        <div class="space-y-4">
-            <button onclick="record('stress', 'high', 'q5', 'q6')" class="btn-modern border-red-500/30">🔥 Високий (постійна напруга)</button>
-            <button onclick="record('stress', 'low', 'q5', 'q6')" class="btn-modern border-green-50
+            width: 55px;
+            height: 55px;
+            border-radius:
