@@ -4,58 +4,243 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Регенерація | Надійний План</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Власні стилі, щоб нічого не зникало */
+        /* ЧИСТИЙ CSS БЕЗ ЗОВНІШНІХ БІБЛІОТЕК */
+        * { box-sizing: border-box; }
+        
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a1a url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
+            font-family: Arial, sans-serif;
+            background: #2c3e50 url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed;
             background-size: cover;
-            color: white;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .main-container {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            padding: 40px;
-            width: 90%;
-            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95); /* Майже білий фон для 100% видимості */
+            color: #1a1a1a;
+            padding: 30px;
+            width: 95%;
+            max-width: 500px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            z-index: 10;
         }
 
         .screen { display: none; }
         .active { display: block !important; }
 
-        /* СУЧАСНІ КНОПКИ */
+        h1 { font-size: 28px; margin-bottom: 15px; color: #333; }
+        h2 { font-size: 22px; margin-bottom: 20px; color: #444; }
+        p { line-height: 1.5; color: #666; margin-bottom: 25px; }
+
+        /* ВЕЛИКІ ЧОРНІ КНОПКИ */
         .btn-action {
-            background: white;
-            color: black;
-            padding: 15px 40px;
-            border-radius: 50px;
+            background: #000;
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 10px;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 18px;
             cursor: pointer;
             border: none;
-            transition: 0.3s;
-            display: inline-block;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.2s;
         }
 
-        .btn-action:hover {
-            transform: scale(1.05);
-            background: #f0f0f0;
-        }
+        .btn-action:hover { background: #333; transform: scale(1.02); }
 
         .btn-option {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255,
+            background: #f4f4f4;
+            border: 2px solid #ddd;
+            padding: 15px;
+            border-radius: 12px;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .btn-option:hover {
+            background: #e9ecef;
+            border-color: #000;
+        }
+
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #000;
+            color: #fff;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #000;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .result-item {
+            background: #f8f9fa;
+            border-left: 5px solid #000;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .link-btn {
+            display: block;
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="music-btn" onclick="toggleMusic()" id="musicTrigger">🔊</button>
+
+    <div class="main-container">
+        
+        <div id="welcome" class="screen active">
+            <h1>Smart Регенерація 🏔️</h1>
+            <p>Персональний план відновлення. Пройди тест за 1 хвилину.</p>
+            <button onclick="startApp()" class="btn-action">Почати аналіз</button>
+        </div>
+
+        <div id="q1" class="screen">
+            <h2>1/7 Твій раціон?</h2>
+            <button onclick="save('diet', 'bad', 'q1', 'q2')" class="btn-option">☕ Кава, перекуси, фастфуд</button>
+            <button onclick="save('diet', 'ok', 'q1', 'q2')" class="btn-option">🥗 Домашня їжа, балансую</button>
+        </div>
+
+        <div id="q2" class="screen">
+            <h2>2/7 Рівень руху?</h2>
+            <button onclick="save('sport', 'low', 'q2', 'q3')" class="btn-option">📍 Мало (сидяча робота)</button>
+            <button onclick="save('sport', 'mid', 'q2', 'q3')" class="btn-option">🏃 Багато ходжу</button>
+        </div>
+
+        <div id="q3" class="screen">
+            <h2>3/7 Якість сну?</h2>
+            <button onclick="save('sleep', 'bad', 'q3', 'q4')" class="btn-option">☁️ Мало, важко заснути</button>
+            <button onclick="save('sleep', 'good', 'q3', 'q4')" class="btn-option">💤 Сплю добре 7-8 год</button>
+        </div>
+
+        <div id="q4" class="screen">
+            <h2>4/7 П'єш воду?</h2>
+            <button onclick="save('water', 'low', 'q4', 'q5')" class="btn-option">💧 Мало (кава/чай)</button>
+            <button onclick="save('water', 'good', 'q4', 'q5')" class="btn-option">🌊 П'ю достатньо</button>
+        </div>
+
+        <div id="q5" class="screen">
+            <h2>5/7 Стрес?</h2>
+            <button onclick="save('stress', 'high', 'q5', 'q6')" class="btn-option">🔥 Висока напруга</button>
+            <button onclick="save('stress', 'low', 'q5', 'q6')" class="btn-option">🍃 Спокійно</button>
+        </div>
+
+        <div id="q6" class="screen">
+            <h2>6/7 Де тренуєшся?</h2>
+            <button onclick="save('loc', 'home', 'q6', 'q7')" class="btn-option">🏠 Вдома</button>
+            <button onclick="save('loc', 'street', 'q6', 'q7')" class="btn-option">⛰️ Вулиця / Гори</button>
+        </div>
+
+        <div id="q7" class="screen">
+            <h2>7/7 Твоя мета?</h2>
+            <button onclick="finish('weight')" class="btn-option">🎯 Схуднення</button>
+            <button onclick="finish('health')" class="btn-option">🧘‍♂️ Енергія</button>
+        </div>
+
+        <div id="loading" class="screen">
+            <div class="loader"></div>
+            <h2>Аналізуємо дані...</h2>
+        </div>
+
+        <div id="result" class="screen">
+            <h2>Твій План 🏆</h2>
+            <div id="res-text"></div>
+            <br>
+            <a href="https://www.youtube.com/watch?v=sAWHSQZ63Bw" target="_blank" class="link-btn">📹 Тренування</a>
+            <a href="https://phc.org.ua/sites/default/files/inline/images/Plate_UKR_0.jpg" target="_blank" class="link-btn" style="background:#28a745;">📸 Схема харчування</a>
+            <button onclick="location.reload()" class="btn-action">Знову</button>
+        </div>
+
+    </div>
+
+    <script>
+        let data = {};
+        const music = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3');
+        music.loop = true;
+
+        function startApp() {
+            music.play().catch(() => {});
+            show('q1');
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                document.getElementById('musicTrigger').innerText = '🔊';
+            } else {
+                music.pause();
+                document.getElementById('musicTrigger').innerText = '🔇';
+            }
+        }
+
+        function show(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function save(key, val, cur, nxt) {
+            data[key] = val;
+            show(nxt);
+        }
+
+        function finish(goal) {
+            data.goal = goal;
+            show('loading');
+            setTimeout(() => {
+                show('result');
+                const resText = document.getElementById('res-text');
+                let html = "";
+                if (data.stress === 'high' || data.sleep === 'bad') {
+                    html = "<div class='result-item'><b>Пріоритет: Відновлення.</b> Твій організм потребує спокою. Більше сну та легкої розтяжки.</div>";
+                } else {
+                    html = "<div class='result-item'><b>Пріоритет: Прогрес.</b> Ти в нормі! Додавай інтенсивності (віджимання, присідання).</div>";
+                }
+                html += `<div class='result-item'>💧 <b>Вода:</b> ${data.water === 'low' ? 'Пий більше!' : 'Чудово.'}</div>`;
+                resText.innerHTML = html;
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
